@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人主页 | 欢迎来到我的小站</title>
+<style>
+  :root {
+    --bg: #0f1220;
+    --bg2: #1a1e35;
+    --card: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.12);
+    --text: #eef0ff;
+    --muted: #9aa3c7;
+    --accent: #6c7bff;
+    --accent2: #ff7ac3;
+    --accent3: #3ddad7;
+    --shadow: 0 10px 40px rgba(0,0,0,.45);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(108,123,255,.25), transparent 60%),
+      radial-gradient(1000px 500px at 90% 10%, rgba(255,122,195,.18), transparent 60%),
+      radial-gradient(800px 800px at 50% 110%, rgba(61,218,215,.12), transparent 60%),
+      var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.7;
+  }
+  .container { max-width: 1080px; margin: 0 auto; padding: 40px 24px 60px; }
+
+  /* ===== 头部英雄区 ===== */
+  header.hero {
+    text-align: center;
+    padding: 56px 24px 48px;
+    position: relative;
+  }
+  .avatar {
+    width: 128px; height: 128px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: inline-flex; align-items:center; justify-content:center;
+    font-size: 52px; color:#fff;
+    box-shadow: var(--shadow);
+    border: 4px solid rgba(255,255,255,.25);
+    margin-bottom: 18px;
+  }
+  .hero h1 { font-size: 40px; letter-spacing: 2px; margin-bottom: 8px; }
+  .hero .tagline {
+    font-size: 18px; color: var(--muted);
+    max-width: 640px; margin: 0 auto 20px;
+  }
+  .badges { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom: 24px; }
+  .badge {
+    display:inline-flex; align-items:center; gap:6px;
+    background: var(--card); border:1px solid var(--border);
+    border-radius: 999px; padding: 6px 16px; font-size: 14px; color: var(--text);
+  }
+  .badge .dot { width:8px; height:8px; border-radius:50%; background: var(--accent3); }
+  .socials { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .socials a {
+    color: var(--text); text-decoration:none;
+    background: var(--card); border:1px solid var(--border);
+    padding: 10px 20px; border-radius: 12px; font-size: 15px;
+    transition: transform .2s, background .2s, border-color .2s;
+  }
+  .socials a:hover { transform: translateY(-3px); border-color: var(--accent); background: rgba(108,123,255,.15); }
+
+  /* ===== 区块 ===== */
+  section.block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    margin-top: 28px;
+    backdrop-filter: blur(6px);
+    box-shadow: var(--shadow);
+  }
+  .block h2 {
+    font-size: 22px; margin-bottom: 18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .block h2::before {
+    content:""; width:6px; height:22px; border-radius:3px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+  }
+
+  /* 个人信息 */
+  .info-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px; }
+  .info-item {
+    background: rgba(0,0,0,.22); border:1px solid var(--border);
+    border-radius: 14px; padding: 16px 18px;
+  }
+  .info-item .k { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .info-item .v { font-size: 16px; }
+
+  /* ===== 小游戏 ===== */
+  .games { display:grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .game-card { text-align:center; }
+  .game-card h3 { margin-bottom: 12px; font-size: 18px; }
+  .game-card canvas {
+    background: rgba(0,0,0,.45);
+    border:1px solid var(--border); border-radius: 12px;
+    max-width: 100%;
+  }
+  .game-controls { margin-top: 12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .game-controls button, .game-controls .btn {
+    background: linear-gradient(135deg, var(--accent), #4a5ae0);
+    color:#fff; border:none; border-radius: 10px;
+    padding: 8px 18px; font-size: 14px; cursor:pointer;
+    transition: transform .15s, opacity .15s;
+  }
+  .game-controls button:hover, .game-controls .btn:hover { transform: translateY(-2px); opacity:.9; }
+  .score-line { color: var(--muted); font-size: 14px; margin-top: 10px; }
+
+  /* ===== 有趣网站 ===== */
+  .sites { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px; }
+  .site-card {
+    display:block; text-decoration:none; color: var(--text);
+    background: rgba(0,0,0,.22); border:1px solid var(--border);
+    border-radius: 14px; padding: 18px; transition: transform .2s, border-color .2s;
+  }
+  .site-card:hover { transform: translateY(-4px); border-color: var(--accent2); }
+  .site-card .t { font-size: 16px; font-weight:600; margin-bottom:6px; }
+  .site-card .d { font-size: 13px; color: var(--muted); }
+
+  footer { text-align:center; color: var(--muted); font-size: 14px; margin-top: 40px; }
+
+  @media (max-width: 760px) {
+    .games { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 头部 -->
+  <header class="hero">
+    <div class="avatar">🧑‍💻</div>
+    <h1 id="nickname">luoluo929</h1>
+    <p class="tagline" id="tagline">这里写一句你的个人简介，介绍一下你自己～</p>
+    <div class="badges">
+      <span class="badge"><span class="dot"></span>GitHub 玩家</span>
+      <span class="badge">🎮 爱玩游戏</span>
+      <span class="badge">🚀 正在成长</span>
+      <span class="badge">⭐ 新人 UP 主</span>
+    </div>
+    <div class="socials">
+      <a href="https://github.com/luoluo929" target="_blank">🐙 GitHub</a>
+      <a href="#" target="_blank">📺 Bilibili</a>
+      <a href="#" target="_blank">📧 邮箱</a>
+    </div>
+  </header>
+
+  <!-- 个人信息 -->
+  <section class="block">
+    <h2>关于我</h2>
+    <div class="info-grid">
+      <div class="info-item"><div class="k">🎂 出生日期</div><div class="v">填写你的生日</div></div>
+      <div class="info-item"><div class="k">📍 所在城市</div><div class="v">填写你的城市</div></div>
+      <div class="info-item"><div class="k">🎓 学校 / 职业</div><div class="v">填写你的学校或职业</div></div>
+      <div class="info-item"><div class="k">💡 兴趣爱好</div><div class="v">编程 · 游戏 · 音乐</div></div>
+    </div>
+  </section>
+
+  <!-- 小游戏 -->
+  <section class="block">
+    <h2>🎮 来玩个小游戏</h2>
+    <div class="games">
+      <div class="game-card">
+        <h3>🐍 贪吃蛇</h3>
+        <canvas id="snake" width="320" height="320"></canvas>
+        <div class="game-controls">
+          <button onclick="startSnake()">开始 / 重新开始</button>
+        </div>
+        <div class="score-line">得分：<span id="snakeScore">0</span>　键盘 ↑ ↓ ← → 控制方向</div>
+      </div>
+      <div class="game-card">
+        <h3>🧱 俄罗斯方块</h3>
+        <canvas id="tetris" width="300" height="360"></canvas>
+        <div class="game-controls">
+          <button onclick="startTetris()">开始 / 重新开始</button>
+        </div>
+        <div class="score-line">得分：<span id="tetrisScore">0</span>　键盘 ← → 移动，↑ 旋转，↓ 加速</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 有趣网站 -->
+  <section class="block">
+    <h2>🌐 有趣的网站</h2>
+    <div class="sites">
+      <a class="site-card" href="https://github.com" target="_blank">
+        <div class="t">🐙 GitHub</div>
+        <div class="d">全球最大的代码托管平台，我的主页就在这里</div>
+      </a>
+      <a class="site-card" href="https://www.bilibili.com" target="_blank">
+        <div class="t">📺 Bilibili</div>
+        <div class="d">哔哩哔哩，看视频、学技术的好地方</div>
+      </a>
+      <a class="site-card" href="https://developer.mozilla.org/zh-CN/" target="_blank">
+        <div class="t">📚 MDN Web Docs</div>
+        <div class="d">学习前端开发必备的文档网站</div>
+      </a>
+      <a class="site-card" href="https://patorjk.com/software/taag/" target="_blank">
+        <div class="t">🔤 ASCII 艺术字</div>
+        <div class="d">在线生成炫酷的字符艺术字</div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> <span id="footerName">luoluo929</span> · 用 ❤️ 与 GitHub Pages 制作</p>
+  </footer>
+</div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ================= 贪吃蛇 ================= */
+const snakeCv = document.getElementById('snake');
+const snakeCtx = snakeCv.getContext('2d');
+const CELL = 16;
+let snake, snakeDir, snakeFood, snakeRun, snakeTimer, snakeScore = 0;
+
+function initSnake() {
+  snake = [{x:8, y:8}];
+  snakeDir = {x:1, y:0};
+  snakeScore = 0;
+  snakeRun = false;
+  document.getElementById('snakeScore').textContent = 0;
+  spawnSnakeFood();
+}
+
+function startSnake() {
+  clearInterval(snakeTimer);
+  initSnake();
+  snakeRun = true;
+  snakeTimer = setInterval(snakeTick, 130);
+}
+
+function spawnSnakeFood() {
+  do {
+    snakeFood = {
+      x: Math.floor(Math.random() * (snakeCv.width/CELL)),
+      y: Math.floor(Math.random() * (snakeCv.height/CELL))
+    };
+  } while (snake.some(s => s.x === snakeFood.x && s.y === snakeFood.y));
+}
+
+function snakeTick() {
+  const head = { x: snake[0].x + snakeDir.x, y: snake[0].y + snakeDir.y };
+  // 撞墙或撞自己
+  if (head.x < 0 || head.y < 0 || head.x >= snakeCv.width/CELL || head.y >= snakeCv.height/CELL ||
+      snake.some(s => s.x === head.x && s.y === head.y)) {
+    clearInterval(snakeTimer);
+    drawSnake(true);
+    return;
+  }
+  snake.unshift(head);
+  if (head.x === snakeFood.x && head.y === snakeFood.y) {
+    snakeScore += 10;
+    document.getElementById('snakeScore').textContent = snakeScore;
+    spawnSnakeFood();
+  } else {
+    snake.pop();
+  }
+  drawSnake(false);
+}
+
+function drawSnake(gameOver) {
+  snakeCtx.fillStyle = 'rgba(0,0,0,.45)';
+  snakeCtx.fillRect(0, 0, snakeCv.width, snakeCv.height);
+  // 食物
+  snakeCtx.fillStyle = '#ff7ac3';
+  snakeCtx.beginPath();
+  snakeCtx.arc(snakeFood.x*CELL + CELL/2, snakeFood.y*CELL + CELL/2, CELL/2 - 2, 0, Math.PI*2);
+  snakeCtx.fill();
+  // 蛇
+  snake.forEach((s, i) => {
+    snakeCtx.fillStyle = i === 0 ? '#3ddad7' : '#6c7bff';
+    snakeCtx.fillRect(s.x*CELL + 1, s.y*CELL + 1, CELL - 2, CELL - 2);
+  });
+  if (gameOver) {
+    snakeCtx.fillStyle = '#fff';
+    snakeCtx.font = 'bold 22px sans-serif';
+    snakeCtx.textAlign = 'center';
+    snakeCtx.fillText('游戏结束', snakeCv.width/2, snakeCv.height/2);
+  }
+}
+
+/* ================= 俄罗斯方块 ================= */
+const tetCv = document.getElementById('tetris');
+const tetCtx = tetCv.getContext('2d');
+const COLS = 10, ROWS = 20, BS = tetCv.width / COLS;
+const SHAPES = [
+  [[1,1,1,1]],
+  [[1,1],[1,1]],
+  [[0,1,0],[1,1,1]],
+  [[1,0,0],[1,1,1]],
+  [[0,0,1],[1,1,1]],
+  [[0,1,1],[1,1,0]],
+  [[1,1,0],[0,1,1]]
+];
+const COLORS = ['#6c7bff','#3ddad7','#ffd166','#ff7ac3','#7ce07c','#ff9f43','#a29bfe'];
+let board, cur, curX, curY, curColor, tetRun, tetTimer, tetScore = 0, dropInterval = 500;
+
+function initTetris() {
+  board = Array.from({length: ROWS}, () => Array(COLS).fill(0));
+  tetScore = 0;
+  tetRun = false;
+  document.getElementById('tetrisScore').textContent = 0;
+}
+
+function startTetris() {
+  clearInterval(tetTimer);
+  initTetris();
+  tetRun = true;
+  spawnPiece();
+  tetTimer = setInterval(tetTick, dropInterval);
+  drawTetris(false);
+}
+
+function spawnPiece() {
+  const idx = Math.floor(Math.random() * SHAPES.length);
+  cur = SHAPES[idx].map(r => [...r]);
+  curColor = COLORS[idx];
+  curX = Math.floor((COLS - cur[0].length) / 2);
+  curY = 0;
+  if (collide(curX, curY)) {
+    clearInterval(tetTimer);
+    drawTetris(true);
+  }
+}
+
+function collide(x, y, shape = cur) {
+  for (let r = 0; r < shape.length; r++) {
+    for (let c = 0; c < shape[r].length; c++) {
+      if (!shape[r][c]) continue;
+      const nx = x + c, ny = y + r;
+      if (nx < 0 || nx >= COLS || ny >= ROWS) return true;
+      if (ny >= 0 && board[ny][nx]) return true;
+    }
+  }
+  return false;
+}
+
+function merge() {
+  cur.forEach((row, r) => row.forEach((v, c) => {
+    if (v && curY + r >= 0) board[curY + r][curX + c] = curColor;
+  }));
+}
+
+function clearLines() {
+  let cleared = 0;
+  for (let r = ROWS - 1; r >= 0; r--) {
+    if (board[r].every(v => v !== 0)) {
+      board.splice(r, 1);
+      board.unshift(Array(COLS).fill(0));
+      cleared++;
+      r++;
+    }
+  }
+  if (cleared) {
+    tetScore += cleared * 100;
+    document.getElementById('tetrisScore').textContent = tetScore;
+  }
+}
+
+function tetTick() {
+  if (!tetRun) return;
+  if (!collide(curX, curY + 1)) {
+    curY++;
+  } else {
+    merge();
+    clearLines();
+    spawnPiece();
+  }
+  drawTetris(false);
+}
+
+function tetMove(dx) { if (!collide(curX + dx, curY)) { curX += dx; drawTetris(false); } }
+function tetRotate() {
+  const rotated = cur[0].map((_, i) => cur.map(row => row[i]).reverse());
+  if (!collide(curX, curY, rotated)) { cur = rotated; drawTetris(false); }
+}
+function tetDrop() { if (!collide(curX, curY + 1)) { curY++; } else { tetTick(); } drawTetris(false); }
+
+function drawTetris(gameOver) {
+  tetCtx.fillStyle = 'rgba(0,0,0,.45)';
+  tetCtx.fillRect(0, 0, tetCv.width, tetCv.height);
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      if (board[r][c]) {
+        tetCtx.fillStyle = board[r][c];
+        tetCtx.fillRect(c*BS + 1, r*BS + 1, BS - 2, BS - 2);
+      }
+    }
+  }
+  if (cur) {
+    cur.forEach((row, r) => row.forEach((v, c) => {
+      if (v) {
+        tetCtx.fillStyle = curColor;
+        tetCtx.fillRect((curX+c)*BS + 1, (curY+r)*BS + 1, BS - 2, BS - 2);
+      }
+    }));
+  }
+  if (gameOver) {
+    tetCtx.fillStyle = '#fff';
+    tetCtx.font = 'bold 22px sans-serif';
+    tetCtx.textAlign = 'center';
+    tetCtx.fillText('游戏结束', tetCv.width/2, tetCv.height/2);
+  }
+}
+
+/* ===== 键盘控制 ===== */
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowUp') { e.preventDefault(); if (tetRun) tetRotate(); }
+  if (e.key === 'ArrowDown') { e.preventDefault(); if (tetRun) tetDrop(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); if (tetRun) tetMove(-1); else if (snakeRun) { snakeDir = {x:-1, y:0}; } }
+  if (e.key === 'ArrowRight') { e.preventDefault(); if (tetRun) tetMove(1); else if (snakeRun) { snakeDir = {x:1, y:0}; } }
+  if (e.key === 'w' || e.key === 'W') { if (snakeRun && snakeDir.y !== 1) snakeDir = {x:0, y:-1}; }
+  if (e.key === 's' || e.key === 'S') { if (snakeRun && snakeDir.y !== -1) snakeDir = {x:0, y:1}; }
+  if (e.key === 'a' || e.key === 'A') { if (snakeRun && snakeDir.x !== 1) snakeDir = {x:-1, y:0}; }
+  if (e.key === 'd' || e.key === 'D') { if (snakeRun && snakeDir.x !== -1) snakeDir = {x:1, y:0}; }
+});
+
+// 初始绘制
+initSnake();
+initTetris();
+drawSnake(false);
+drawTetris(false);
+</script>
+</body>
+</html>
