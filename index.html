@@ -70,12 +70,12 @@
 
   /* ===== 区块 ===== */
   section.block {
-    background: var(--card);
+    background: rgba(255,255,255,0.02);
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 28px;
     margin-top: 28px;
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(2px);
     box-shadow: var(--shadow);
   }
   .block h2 {
@@ -90,7 +90,7 @@
   /* 个人信息 */
   .info-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px; }
   .info-item {
-    background: rgba(0,0,0,.22); border:1px solid var(--border);
+    background: rgba(0,0,0,.08); border:1px solid var(--border);
     border-radius: 14px; padding: 16px 18px;
   }
   .info-item .k { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
@@ -112,7 +112,7 @@
   .sites { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px; }
   .site-card {
     display:block; text-decoration:none; color: var(--text);
-    background: rgba(0,0,0,.22); border:1px solid var(--border);
+    background: rgba(0,0,0,.08); border:1px solid var(--border);
     border-radius: 14px; padding: 18px; transition: transform .2s, border-color .2s;
   }
   .site-card:hover { transform: translateY(-4px); border-color: var(--accent2); }
@@ -168,7 +168,7 @@
         <div class="t">🐙 GitHub</div>
         <div class="d">全球最大的代码托管平台，我的主页就在这里</div>
       </a>
-      <a class="site-card" https://www.bilibili.com/ " target="_blank">
+      <a class="site-card" href="https://www.bilibili.com/" target="_blank">
         <div class="t">📺 Bilibili</div>
         <div class="d">哔哩哔哩，看视频、学技术的好地方</div>
       </a>
