@@ -19,6 +19,12 @@
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
+    <!-- 右上角悬浮音乐控件 -->
+<div class="music-float">
+  <button class="music-toggle" id="musicBtn">🎵</button>
+</div>
+<audio id="bgMusic" src="music.mp3" loop>
+  
     font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
     background:
       
@@ -126,6 +132,30 @@
     .hero h1 { font-size: 30px; }
   }
 </style>
+  /* 右上角悬浮音乐播放器 */
+.music-float {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 999;
+}
+.music-toggle {
+  background: linear-gradient(135deg, var(--accent), #4a5ae0);
+  border: 1px solid var(--border);
+  color: #fff;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow);
+  transition: 0.2s ease;
+}
+.music-toggle:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
 </head>
 <body>
 <div class="container">
@@ -199,6 +229,22 @@ initTetris();
 drawSnake(false);
 drawTetris(false);
 </script>
+  const audio = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+let isPlay = false;
+
+// 默认单曲循环开启（audio标签自带loop）
+musicBtn.addEventListener('click', () => {
+  if (!isPlay) {
+    audio.play();
+    musicBtn.textContent = '⏸';
+    isPlay = true;
+  } else {
+    audio.pause();
+    musicBtn.textContent = '🎵';
+    isPlay = false;
+  }
+});
 </body>
 </html>
 
